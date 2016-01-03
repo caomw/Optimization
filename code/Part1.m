@@ -4,7 +4,7 @@ clear all
 close all
 clc
 
-% To run code properly, please execute cells in order of appearence 
+% For best performance, please execute cells in order of appearence 
 
 %% 1 - Brute Force Approach
 
@@ -12,12 +12,11 @@ clc
 
 x = -10:0.0001:10; % Stoopid array of points
 y = f1(x); % Stoopid evaluation of function on billion points
-s = size(x);
-s = s(2); % Number of points
+s = size(x,2); % Number of points
 index = 1; % Initialize minimum index
 min = y(1); % Initialize minimum value
 
-% Find smalles value or values
+% Find smallest value or values
 for i = 2:s
     if y(i)<min
         min = y(i);
@@ -45,28 +44,28 @@ stem(x(index),y(index),'r');
 clc
 
 % Initial Points
-a = -10+randn();
-c = 10+randn();
+a = -10;
+c = 10;
 b = -0.4;
 
 % Constant
 w = 0.38197; 
 
-% Distances
-d1 = b - a;
+% Calculation parameters
+precision = 0.00001;
+iteration_limit = 100;
+
+% Calculation variables
+counter = 0;
+d1 = b - a; % Distances
 d2 = c - b;
 d = c - b;
 
-% Calculation parameters
-precision = 0.00001;
-counter = 0;
-iteration_limit = 100;
-
+% Store coordinates for plotting
 coords = [b f1(b)];
 
 % First, check if there is a minimum inside interval
 if f1(b)<f1(a) && f1(b)<f1(c)
-    
     % Apply Golden Search
         % Loop stops when precision is obtained or when iterations reach an
         % iteration number limit
@@ -89,6 +88,7 @@ if f1(b)<f1(a) && f1(b)<f1(c)
             end
         end
         
+        % Store coordinates
         coords = [coords; b f1(b)];
         
         % Update distances and counter to check if loop should continue
@@ -101,6 +101,7 @@ else
     'No guaranteed minimum in defined interval'
 end
 
+% Plot results
 xp = -0.5:0.001:1.5;
 yp = f1(xp);
 figure;
@@ -126,13 +127,16 @@ a = -7;
 b = 6.2;
 c = (a+b)/2;
 
+% Store coordinates for plotting
 coords = [c f1(c)];
 
 % Calculation parameters
 precision = 0.00001;
-counter = 0;
 iteration_limit = 100;
+
+% Calculation variables
 d = precision + 1;
+counter = 0;
 
 % Check if there's a minimum inside interval
 if f1(c)<f1(a) && f1(c)<f1(b)
@@ -164,6 +168,7 @@ if f1(c)<f1(a) && f1(c)<f1(b)
 
         end
         
+        % Store coordinates
         coords = [coords; c f1(c)];
 
         % Update distance and counter
@@ -174,6 +179,7 @@ else
     'No guaranteed minimum in defined interval'
 end
 
+% Plot results
 xp = -0.5:0.001:1.5;
 yp = f1(xp);
 figure;
@@ -199,10 +205,13 @@ x = -0.3;
 % Calculation parameters
 dx = 0.001;
 precision = 0.00001;
-counter = 0;
 iteration_limit = 30;
+
+% Calculation variables
+counter = 0;
 d = precision + 1;
 
+% Store coordinates for plotting
 coords = [x f1(x)];
 
 % Apply Newton's Method
@@ -224,6 +233,7 @@ while d>precision && counter<iteration_limit
     % Calculate new point
     x = x - (first_deriv/sec_deriv);
     
+    % Store coordinates
     coords = [coords; x f1(x)];
     
     % Update distance and counter
@@ -231,6 +241,7 @@ while d>precision && counter<iteration_limit
     counter = counter + 1;
 end
 
+% Plot results
 xp = -0.5:0.001:0.8;
 yp = f1(xp);
 figure;

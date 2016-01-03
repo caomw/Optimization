@@ -22,7 +22,6 @@ x0 = [1.5 1.5];
 
 % Calculation parameters
 precision = 0.00001;
-counter = 0;
 iteration_limit = 100;
 
 % Calculation variables
@@ -30,7 +29,9 @@ x = x0;
 prev_1 = x0 + d1;
 prev_2 = x0 + d2;
 coords = x;
+counter = 0;
 
+% Calculate ALS
 while norm(prev_1 - x)>precision && norm(prev_2 - x)>precision && counter<iteration_limit
     % Computes 2 steps at a time
     prev_2 = x;
@@ -41,6 +42,7 @@ while norm(prev_1 - x)>precision && norm(prev_2 - x)>precision && counter<iterat
     counter = counter + 1;
 end
 
+% Plot results
 xp = -2:0.1:2;
 yp = -2:0.1:2;
 [xx,yy] = meshgrid(xp,yp);
@@ -56,6 +58,7 @@ grid on;
 hold on;
 plot(coords(:,1),coords(:,2),'--ro','LineWidth',2);
 
+%Print results
 x_min = x
 y_min = f2(x)
 num_iterations = counter*2 % Because two computations are done per loop
@@ -70,7 +73,6 @@ x0 = [1.5 1.5];
 
 % Calculation parameters
 precision = 0.00001;
-counter = 0;
 iteration_limit = 100;
 dx = 0.001;
 dx1 = [dx 0];
@@ -81,7 +83,9 @@ x = x0;
 grad = [1 1];
 prev = x0 + grad;
 coords = x;
+counter = 0;
 
+% Calculate SD
 while norm(prev - x)>precision && counter<iteration_limit
     prev = x;
     deriv_x1 = (f2(x+dx1)-f2(x))/dx;
@@ -93,6 +97,7 @@ while norm(prev - x)>precision && counter<iteration_limit
     counter = counter + 1;
 end
 
+% Print results
 xp = -2:0.1:2;
 yp = -2:0.1:2;
 [xx,yy] = meshgrid(xp,yp);
@@ -123,7 +128,6 @@ x0 = [1.5 1.5];
 
 % Calculation parameters
 precision = 0.00001;
-counter = 0;
 iteration_limit = 100;
 
 % Calculation variables
@@ -134,7 +138,9 @@ u1 = [1 0];
 u2 = [0 1];
 prev = x0 + u1;
 coords = P0;
+counter = 0;
 
+% Calculate PM
 while norm(prev - P0)>precision && counter<iteration_limit
     prev = P0;
     
@@ -148,9 +154,10 @@ while norm(prev - P0)>precision && counter<iteration_limit
     P0 = dtBrent(@f2,u2,P2);
     coords = [coords; P0];
     
-    counter = counter + 1;
+    counter = counter + 3;
 end
 
+% Print results
 xp = -2:0.1:2;
 yp = -2:0.1:2;
 [xx,yy] = meshgrid(xp,yp);
@@ -178,19 +185,17 @@ num_iterations = counter
 clc
 
 % Starting point
-% x0 = [1000; 1000000]; % Absurd point to test stability
 x0 = [1.5; 1.5];
 
 % Calculation parameters
 precision = 0.001;
-counter = 0;
 iteration_limit = 100;
 
 % Calculation variables
 x = x0;
 prev = x+1;
-
 coords = x;
+counter = 0;
 
 % Begin
 k = 0;
@@ -226,6 +231,7 @@ while norm(prev - x)>precision && counter<iteration_limit
     coords = [coords x];
 end
 
+% Print results
 coords = coords';
 xp = -2:0.1:2;
 yp = -2:0.1:2;
@@ -267,7 +273,6 @@ x0 = [-2 -2];
 
 % Calculation parameters
 precision = 0.00001;
-counter = 0;
 iteration_limit = 100;
 
 % Calculation variables
@@ -275,6 +280,7 @@ x = x0;
 prev_1 = x0 + d1;
 prev_2 = x0 + d2;
 coords = x;
+counter = 0;
 
 while (norm(prev_1 - x)>precision || norm(prev_2 - x)>precision) && counter<iteration_limit
     % Computes 2 steps at a time
@@ -286,6 +292,7 @@ while (norm(prev_1 - x)>precision || norm(prev_2 - x)>precision) && counter<iter
     counter = counter + 1;
 end
 
+%Plot results
 xp = -2:0.1:0.2;
 yp = -2:0.1:-0.8;
 [xx,yy] = meshgrid(xp,yp);
@@ -315,9 +322,7 @@ x0 = [-1.5 -1.5];
 
 % Calculation parameters
 precision = 0.00001;
-counter = 0;
 iteration_limit = 100;
-grad_multiplier = 5;
 dx = 0.001;
 dx1 = [dx 0];
 dx2 = [0 dx];
@@ -327,6 +332,7 @@ x = x0;
 grad = [1 1];
 prev = x0 + grad;
 coords = x;
+counter = 0;
 
 while norm(prev - x)>precision && counter<iteration_limit
     prev = x;
@@ -339,6 +345,7 @@ while norm(prev - x)>precision && counter<iteration_limit
     counter = counter + 1;
 end
 
+% Plot results
 xp = -2:0.1:0.2;
 yp = -2:0.1:0;
 [xx,yy] = meshgrid(xp,yp);
@@ -368,7 +375,6 @@ x0 = [0; 0];
 
 % Calculation parameters
 precision = 0.00001;
-counter = 0;
 iteration_limit = 100;
 grad_multiplier = 5;
 dx = 0.001;
@@ -378,9 +384,9 @@ dx2 = [0 dx];
 % Calculation variables
 x = x0;
 prev = x0 + 1;
-% H = eye(2);
 H = dtHess2d(@f2_2,x);
 coords = x;
+counter = 0;
 
 while norm(prev - x)>precision && counter<iteration_limit
     prev = x;
@@ -395,11 +401,10 @@ while norm(prev - x)>precision && counter<iteration_limit
     H_temp = H + (x*(x'))/(x'*f) - ((H*f)*((H*f)'))/(f'*H*f);
     H = H_temp + (f'*H*f)*(u*(u'));
     
-%     H = H+((x-H*f)/(x'*H*f))*(x'*H);
-    
     counter = counter + 1;
 end
 
+% Plot results
 coords = coords';
 xp = -2:0.1:0.5;
 yp = -2:0.1:0.5;
