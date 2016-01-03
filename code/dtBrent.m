@@ -7,6 +7,7 @@ function x_min = dtBrent(f,d,x0)
     a = 0;
     b = 0;
     c = 0;
+    x_min = x0;
     
     d = d/norm(d); % Just in case
     

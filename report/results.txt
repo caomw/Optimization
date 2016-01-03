@@ -1,0 +1,51 @@
+-------------1D-------------
+min: x = 0.2717, f(x) = -0.7304
+
+Golden search
+29 iterations
+
+Brent's method
+18 iterations
+
+Gauss-Newton
+7 iterations
+
+-------------2D-------------
+x_min = -0.2174 , 0.1304
+y_min = 3.8261
+
+ALS
+10 iterations
+
+Steepest
+6 iterations
+
+Powell's
+9 (3) iterations
+
+CG
+3 iterations
+
+-------------2D2-------------
+x_min = -0.0000   -1.0000
+y_min = 3.0000
+
+ALS
+98 iterations
+
+SD
+x_min = -0.0009   -1.0004
+y_min = 3.0002
+num_iterations = 31
+
+Quasi Newton - VERY UNSTABLE
+x_min = 0.0002  -0.9995
+y_min = 3.0001
+num_iterations = 8
+
+-------------ND-------------
+
+x_min = 4.4668 3.4353 0.9883 0.9998 0.7933
+y_min = 19.1328
+num_iterations = 101
+
